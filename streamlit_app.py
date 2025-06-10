@@ -71,7 +71,7 @@ if user_input and not st.session_state.skip_input_processing:
             gemini_answer = ask_gemini(user_input)
             st.info(gemini_answer)
           
-    st.session_state.skip_input_processing = False
+st.session_state.skip_input_processing = False
 
 st.button("Clear", on_click=clear_everything)
 
