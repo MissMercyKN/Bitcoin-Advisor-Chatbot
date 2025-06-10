@@ -8,6 +8,9 @@ load_dotenv()  # loads variables from .env
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
 
+if "chat_session" not in st.session_state:
+    model = genai.GenerativeModel('gemini-pro')
+    st.session_state.chat_session = model.start_chat(history=[])
 # ---- Set Page Config ----
 st.set_page_config(page_title="BitMentor", page_icon="🧠")
 
