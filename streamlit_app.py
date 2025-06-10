@@ -43,6 +43,9 @@ def ask_gemini(question):
         st.error(f"An error occurred with Gemini AI: {e}") # Added st.error for visibility
         return "Sorry, I had trouble reaching the AI service or processing your request."
 
+def clear_everything():
+    st.session_state.user_question_input = "" # This clears the text box
+    st.rerun()
 # ---- Chat Interface ----
 user_input = st.text_input("💬 Ask BitMentor a question about Bitcoin")
 
@@ -62,11 +65,8 @@ if user_input:
         with st.spinner("Thinking... 🤖"):
             gemini_answer = ask_gemini(user_input)
             st.info(gemini_answer)
-            
-if st.button("Clear Input and Output"):
-    st.session_state.user_question_input = ""
-    st.rerun()
-
+          
+st.button("Clear", on_click=clear_everything)
 
 # ---- Disclaimer ----
 st.markdown("---")
