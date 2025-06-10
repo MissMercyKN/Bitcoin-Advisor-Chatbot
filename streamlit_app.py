@@ -34,13 +34,11 @@ qa_data = {
 # ---- Function to get response from Gemini AI ----
 def ask_gemini(question):
     try:
-        response = genai.chat.send_message(
-            model="models/chat-bison-001",
-            messages=[{"role": "user", "content": question}]
-        )
-        return response.last_response.message.content
+        response = st.session_state.chat_session.send_message(question)
+        return response.text 
     except Exception as e:
-        return f"Sorry, I had trouble reaching the AI service. Error: {e}"
+        st.error(f"An error occurred with Gemini AI: {e}") # Added st.error for visibility
+        return "Sorry, I had trouble reaching the AI service or processing your request."
 
 # ---- Chat Interface ----
 user_input = st.text_input("💬 Ask BitMentor a question about Bitcoin")
