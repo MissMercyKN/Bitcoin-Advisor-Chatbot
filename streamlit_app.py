@@ -1,4 +1,4 @@
-import streamlit_app as st
+import streamlit as st
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
