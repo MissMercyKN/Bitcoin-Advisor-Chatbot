@@ -12,8 +12,8 @@ if "chat_session" not in st.session_state:
     model = genai.GenerativeModel('gemini-1.5-flash')
     st.session_state.chat_session = model.start_chat(history=[])
 
-def clear_everything():
-    st.session_state.user_question_input = ""
+if "skip_input_processing" not in st.session_state:
+    st.session_state.skip_input_processing = False
 
 # ---- Set Page Config ----
 st.set_page_config(page_title="BitMentor", page_icon="🧠")
@@ -47,11 +47,14 @@ def ask_gemini(question):
         st.error(f"An error occurred with Gemini AI: {e}") # Added st.error for visibility
         return "Sorry, I had trouble reaching the AI service or processing your request."
 
-
+def clear_everything():
+    st.session_state.user_question_input = "" 
+    st.session_state.skip_input_processing = True
+    
 # ---- Chat Interface ----
-user_input = st.text_input("💬 Ask BitMentor a question about Bitcoin")
+user_input = st.text_input("💬 Ask BitMentor a question about Bitcoin", key="user_question_input")
 
-if user_input:
+if user_input and not st.session_state.skip_input_processing:
     user_question = user_input.lower()
 
     found_answer = None
@@ -68,7 +71,10 @@ if user_input:
             gemini_answer = ask_gemini(user_input)
             st.info(gemini_answer)
           
+    st.session_state.skip_input_processing = False
+
 st.button("Clear", on_click=clear_everything)
+
 
 # ---- Disclaimer ----
 st.markdown("---")
