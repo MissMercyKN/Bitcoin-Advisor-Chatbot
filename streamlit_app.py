@@ -11,6 +11,13 @@ genai.configure(api_key=api_key)
 if "chat_session" not in st.session_state:
     model = genai.GenerativeModel('gemini-1.5-flash')
     st.session_state.chat_session = model.start_chat(history=[])
+
+def clear_everything():
+    st.session_state.user_question_input = ""
+    model = genai.GenerativeModel('gemini-1.5-flash') # Re-initialize the model
+    st.session_state.chat_session = model.start_chat(history=[])
+    st.rerun()
+
 # ---- Set Page Config ----
 st.set_page_config(page_title="BitMentor", page_icon="🧠")
 
@@ -43,9 +50,7 @@ def ask_gemini(question):
         st.error(f"An error occurred with Gemini AI: {e}") # Added st.error for visibility
         return "Sorry, I had trouble reaching the AI service or processing your request."
 
-def clear_everything():
-    st.session_state.user_question_input = "" # This clears the text box
-    st.rerun()
+
 # ---- Chat Interface ----
 user_input = st.text_input("💬 Ask BitMentor a question about Bitcoin")
 
