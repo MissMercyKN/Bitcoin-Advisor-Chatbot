@@ -62,9 +62,10 @@ if user_input:
         with st.spinner("Thinking... 🤖"):
             gemini_answer = ask_gemini(user_input)
             st.info(gemini_answer)
-      if st.button("Clear Input and Output"):
-              st.session_state.user_question_input = ""
-                 st.rerun()
+            
+if st.button("Clear Input and Output"):
+    st.session_state.user_question_input = ""
+    st.rerun()
 
 
 # ---- Disclaimer ----
