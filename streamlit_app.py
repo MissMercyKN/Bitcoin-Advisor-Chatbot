@@ -14,9 +14,6 @@ if "chat_session" not in st.session_state:
 
 def clear_everything():
     st.session_state.user_question_input = ""
-    model = genai.GenerativeModel('gemini-1.5-flash') # Re-initialize the model
-    st.session_state.chat_session = model.start_chat(history=[])
-    st.rerun()
 
 # ---- Set Page Config ----
 st.set_page_config(page_title="BitMentor", page_icon="🧠")
